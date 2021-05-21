@@ -1,0 +1,5 @@
+include ':posenet'
+include ':poseNetModule'
+include ':app'
+rootProject.name = "MotioNet"
+include ':openCVLibrary342'
