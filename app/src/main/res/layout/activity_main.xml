@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/cameraFrames"
+        android:layout_width="match_parent"
+        android:layout_height="577dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="154dp"
+        android:visibility="visible"
+        app:show_fps="true"/>
+
+    <Button
+        android:id="@+id/btnCapture"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="94dp"
+        android:text="Capture"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/StopBtn"
+        android:layout_width="144dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginRight="43dp"
+        android:layout_marginBottom="66dp"
+        android:layout_toStartOf="@+id/btnCapture"
+        android:layout_toLeftOf="@+id/btnCapture"
+        android:text="Stop"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/Button20Frames"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="25dp"
+        android:text="Capture 20 Frames"
+        android:visibility="visible" />
+
+</RelativeLayout>
