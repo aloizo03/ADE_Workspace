@@ -47,7 +47,8 @@ public class motioNet {
         file = filename;
         posePart pose = poseEstimation.get(0);
         double frameTime = duration * FPS;
-        frameTime = duration / frameTime;
+        frameTime =  poseEstimation.size() / 30;
+        System.out.println(frameTime);
         output+="HIERARCHY\n";
         output+="ROOT Hips\n";
         output+="{\n";
@@ -155,7 +156,7 @@ public class motioNet {
                 "\t}\n" +
                 "}\n";
         output+="MOTION\nFrames: "+(poseEstimation.size()+1)+"\n" +
-                "Frame Time: "+frameTime+"\n";
+                "Frame Time: 0.0111\n";
         output+="0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 \n";
         for(int i = 0; i < poseEstimation.size(); i++){
             pose = poseEstimation.get(i);
@@ -219,11 +220,8 @@ public class motioNet {
             bones.setNeck(neck);
 
             bonesLength.add(bones);
-//            System.out.println(bones.toString());
-
             posePart fakeSkeleton = makeT_Pose(bones, jointRot);
             T_Pose.add(fakeSkeleton);
-//            System.out.println(fakeSkeleton.toString());
         }
 
     }
@@ -399,11 +397,12 @@ public class motioNet {
         int c =  6;
         for(int i=0; i< poseParts.size(); i+=c){
 //            double differenceAngle[] = new double[19];
+            // For every frame get her confident values keypoints and the T-pose
             posePart pp = poseParts.get(i);
             posePart tPose = this.T_Pose.get(i);
             posePart Frames5[] = new posePart[5];
             posePart Frames5TPose[] = new posePart[5];
-           c =  6;
+            c =  6;
             if(poseParts.size() - i <= 5){
                 c = poseParts.size() - i;
             }
@@ -413,15 +412,15 @@ public class motioNet {
                 Frames5[j - 1] = poseParts.get(j+i);
                 Frames5TPose[j - 1] = T_Pose.get(j+i);
             }
-            // Local transforms
+            // For the 6 frames we calculate the axis z
             posePart parent = FakecalculateZ(pp, tPose);
 
             // local transform
             double [][][][]transforms = new double[counter + 1][15][3][3];
 
+            // Get the local transform of parent the first frame from the six
             transforms[0] = transformRotation(parent);
             posePart []fakeZ = new posePart[counter];
-//            System.out.println(parent.toString());
             for(int j = 0 ;j < counter; j++) {
                 fakeZ[j] = FakecalculateZ(Frames5[j], Frames5TPose[j]);
 
